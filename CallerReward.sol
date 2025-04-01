@@ -1,19 +1,20 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-// Minimal ERC20 interface for USDT.
+// Minimal ERC20 interface for USDC.
 interface IERC20 {
     function transfer(address recipient, uint256 amount) external returns (bool);
     function transferFrom(address sender, address recipient, uint256 amount) external returns (bool);
 }
 
 // Minimal ERC721 interface for the whitelist NFT.
+// We assume the NFT contract implements the ownerOf function.
 interface IERC721 {
-    function balanceOf(address owner) external view returns (uint256);
+    function ownerOf(uint256 tokenId) external view returns (address);
 }
 
 contract FirstCallerReward {
-    IERC20 public usdt;
+    IERC20 public usdc;
     IERC721 public whitelistNFT;
     address public deployer;
 
@@ -21,14 +22,16 @@ contract FirstCallerReward {
     uint256 public remainingPrizePool;
     bool public prizeDeposited;
     bool public activityEnded;
-    mapping(address => bool) public hasClaimed;
+    
+    // Tracks which NFT token IDs have been used to claim a reward.
+    mapping(uint256 => bool) public tokenClaimed;
 
     // Anti-reentrancy variable.
     uint256 private unlocked = 1;
 
     // Events for logging
     event RewardDeposited(uint256 amount);
-    event RewardClaimed(address indexed claimant, uint256 amount);
+    event RewardClaimed(address indexed claimant, uint256 amount, uint256 tokenId);
     event ActivityEnded(uint256 remaining, address indexed deployer);
 
     // Modifier to restrict functions to the deployer.
@@ -45,46 +48,41 @@ contract FirstCallerReward {
         unlocked = 1;
     }
     
-    // The constructor sets the USDT token address and the whitelist NFT address.
-    constructor(address _usdtAddress, address _whitelistNFTAddress) {
-        usdt = IERC20(_usdtAddress);
+    // Constructor sets the USDC token address and the whitelist NFT address.
+    constructor(address _usdcAddress, address _whitelistNFTAddress) {
+        usdc = IERC20(_usdcAddress);
         whitelistNFT = IERC721(_whitelistNFTAddress);
         deployer = msg.sender;
     }
     
     // Deployer-only function to deposit the reward into the contract.
-    // Ensure the deployer has approved the contract to transfer USDT on their behalf.
+    // Ensure the deployer has approved the contract to transfer USDC on their behalf.
     function depositReward(uint256 _rewardAmount) external onlyDeployer {
         require(!prizeDeposited, "Prize already deposited");
-        require(usdt.transferFrom(msg.sender, address(this), _rewardAmount), "USDT transfer failed");
+        require(usdc.transferFrom(msg.sender, address(this), _rewardAmount), "USDC transfer failed");
         totalPrizePool = _rewardAmount;
         remainingPrizePool = _rewardAmount;
         prizeDeposited = true;
         emit RewardDeposited(_rewardAmount);
     }
     
-    // Eligibility check: The caller must hold at least one whitelist NFT.
-    function isEligible(address caller) internal view returns (bool) {
-        return whitelistNFT.balanceOf(caller) > 0;
-    }
-    
-    // Function to claim half of the remaining prize pool.
-    // Each eligible caller can claim only once.
-    function claimReward() external nonReentrant {
+    // Claim the reward using a specific NFT token ID.
+    // The caller must be the current owner of the NFT and the token must not have been used before.
+    function claimReward(uint256 tokenId) external nonReentrant {
         require(prizeDeposited, "Prize not deposited yet");
         require(!activityEnded, "Activity ended");
-        require(isEligible(msg.sender), "Caller does not hold a whitelist NFT");
-        require(!hasClaimed[msg.sender], "Caller has already claimed their reward");
+        require(whitelistNFT.ownerOf(tokenId) == msg.sender, "Caller is not the owner of this NFT");
+        require(!tokenClaimed[tokenId], "Reward for this NFT has already been claimed");
 
         uint256 rewardAmount = remainingPrizePool / 2;
         require(rewardAmount > 0, "No prize left to claim");
 
-        // Update state before external call to avoid reentrancy.
-        hasClaimed[msg.sender] = true;
+        // Mark this NFT as having claimed its reward.
+        tokenClaimed[tokenId] = true;
         remainingPrizePool -= rewardAmount;
 
-        require(usdt.transfer(msg.sender, rewardAmount), "USDT transfer failed");
-        emit RewardClaimed(msg.sender, rewardAmount);
+        require(usdc.transfer(msg.sender, rewardAmount), "USDC transfer failed");
+        emit RewardClaimed(msg.sender, rewardAmount, tokenId);
     }
 
     // Deployer-only function to end the activity and reclaim all remaining prize pool tokens.
@@ -97,7 +95,7 @@ contract FirstCallerReward {
         require(remaining > 0, "No prize left to claim back");
         remainingPrizePool = 0;
 
-        require(usdt.transfer(deployer, remaining), "USDT transfer failed");
+        require(usdc.transfer(deployer, remaining), "USDC transfer failed");
         emit ActivityEnded(remaining, deployer);
     }
 }
