@@ -26,7 +26,7 @@ USDC（USD Coin）是一种与美元挂钩的稳定币，1 USDC 的价值始终�
 
 ### 2. 领取奖励
 **连接到奖励合约：**  
-- 使用 dApp 界面、Etherscan 的“Write Contract”选项卡或 Remix 与奖励合约交互。  
+- 使用 dApp 界面（暂未提供）、Etherscan 的“Write Contract”选项卡、 Remix或者自己编写代码与奖励合约交互。  
 - 输入合约地址，并使用提供的 ABI 加载合约。  
 
 **调用 claimReward 函数：**  
