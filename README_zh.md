@@ -47,7 +47,7 @@ USDC（USD Coin）是一种与美元挂钩的稳定币，1 USDC 的价值始终�
 
 ## 重要信息
 ⚠️安全提醒⚠️
-- 请认准我们唯一的合约地址(Contract Address)[0x893fA9C14c422338E237A9fAB29Deb17AE5D9C74](https://sepolia.etherscan.io/address/0x893fA9C14c422338E237A9fAB29Deb17AE5D9C74)，并且目前处于测试完阶段该地址在测试网上(Sepolia)，任何其他地址都是冒充或者钓鱼合约，切勿交互！
+- 请认准我们唯一的合约地址(Contract Address) [0x893fA9C14c422338E237A9fAB29Deb17AE5D9C74](https://sepolia.etherscan.io/address/0x893fA9C14c422338E237A9fAB29Deb17AE5D9C74)，并且目前处于测试完阶段该地址在测试网上(Sepolia)，任何其他地址都是冒充或者钓鱼合约，切勿交互！
 - 该活动不需要任何额外费用，任何声称可以购买白名单的行为都是诈骗！请勿相信OTC交易！
 - 在奖池过低时不建议交互，这很可能造成您不必要的损失！
 
