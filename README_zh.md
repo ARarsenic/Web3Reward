@@ -1,3 +1,5 @@
+⚠️⚠️重要提醒：该项目还在测试中！
+
 # Web3 社团参与者奖励领取说明
 欢迎加入我们学校的 Web3 社团，我们正在筹备该社团，我们打算激励早期参与者！如果你符合条件，可以领取 USDC 奖励，无需复杂操作。快来按照以下步骤参与吧！
 
@@ -27,7 +29,7 @@ USDC（USD Coin）是一种与美元挂钩的稳定币，1 USDC 的价值始终�
 
 ### 2. 领取奖励
 **连接到奖励合约：**  
-- 使用 dApp 界面（暂未提供）、Etherscan 的[“Write Contract”](https://docs.etherscan.io/tutorials/read-write-smart-contracts)选项卡、 Remix或者自己编写代码与奖励合约交互。  
+- 使用 dApp 界面（暂未提供）、Etherscan 的[“Write Contract”](https://sepolia.etherscan.io/address/0x893fA9C14c422338E237A9fAB29Deb17AE5D9C74#writeContract)选项卡、 Remix或者自己编写代码并输入你nft的`tokenid`与奖励合约交互。  
 - 输入合约地址，并使用提供的 ABI 加载合约。  
 
 **调用 claimReward 函数：**  
@@ -42,6 +44,13 @@ USDC（USD Coin）是一种与美元挂钩的稳定币，1 USDC 的价值始终�
 ### 3. 验证交易
 - 交易确认后，检查您的钱包，确保 USDC 奖励已入账。  
 - 可选：检查合约的公共变量（remainingPrizePool），查看奖池中的剩余余额。
+
+## 重要信息
+⚠️安全提醒⚠️
+- 请认准我们唯一的合约地址(Contract Address)[0x893fA9C14c422338E237A9fAB29Deb17AE5D9C74](https://sepolia.etherscan.io/address/0x893fA9C14c422338E237A9fAB29Deb17AE5D9C74)，并且目前处于测试完阶段该地址在测试网上(Sepolia)，任何其他地址都是冒充或者钓鱼合约，切勿交互！
+- 该活动不需要任何额外费用，任何声称可以购买白名单的行为都是诈骗！请勿相信OTC交易！
+- 在奖池过低时不建议交互，这很可能造成您不必要的损失！
+
 
 ## 附加信息
 **无需批准：**  
