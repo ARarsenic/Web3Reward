@@ -29,11 +29,11 @@ USDC（USD Coin）是一种与美元挂钩的稳定币，1 USDC 的价值始终�
 
 ### 2. 领取奖励
 **连接到奖励合约：**  
-- 使用 dApp 界面（暂未提供）、Etherscan 的[“Write Contract”](https://sepolia.etherscan.io/address/0x893fA9C14c422338E237A9fAB29Deb17AE5D9C74#writeContract)选项卡、 Remix或者自己编写代码并输入你NFT的`tokenid`与奖励合约交互。  
+- 使用 dApp 界面（暂未提供）、Etherscan 的[“Write Contract”](https://sepolia.etherscan.io/address/0x893fA9C14c422338E237A9fAB29Deb17AE5D9C74#writeContract)选项卡、 Remix或者自己编写代码并传入你NFT的`tokenid`与奖励合约交互。  
 - 输入合约地址，并使用提供的 ABI 加载合约。  
 
 **调用 claimReward 函数：**  
-- 从您的符合条件的钱包中简单调用 claimReward 函数。  
+- 从您的符合条件的钱包中调用 claimReward 函数，需传入参数你NFT的`tokenid`。  
 - 每个符合条件的地址只能领取一次。  
 - 合约将自动将剩余奖池的一半转入您的钱包。  
 
