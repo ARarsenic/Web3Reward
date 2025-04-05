@@ -33,7 +33,7 @@ USDC（USD Coin）是一种与美元挂钩的稳定币，1 USDC 的价值始终�
 - 输入合约地址，并使用提供的 ABI 加载合约。  
 
 **调用 claimReward 函数：**  
-- 从您的符合条件的钱包中调用 claimReward 函数，需要传入`uint256`参数`tokenId`为您所持有NFT所对应的`tokenId`。  
+- 从您的符合条件的钱包中调用 claimReward 函数，需要传入`uint256`参数`tokenId`（对应于您所持有NFT所对应的`tokenId`）。  
 - 每个NFT只能领取一次，如果您将NFT交易给他人，将无法领取奖励。  
 - 合约将自动将剩余奖池的一半转入您的钱包。  
 
